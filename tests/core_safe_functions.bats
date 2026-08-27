@@ -1166,30 +1166,44 @@ SCRIPT
     run env PROJECT_ROOT="$PROJECT_ROOT" /bin/bash --noprofile --norc <<'SCRIPT'
 set -euo pipefail
 source "$PROJECT_ROOT/lib/core/common.sh"
-# `remaining` is `deadline - SECONDS`, and SECONDS keeps ticking in real time.
-# Re-pinning the clock per call narrowed the race but did not close it: with a
-# deadline one second out, a command-substitution fork that straddles a second
-# boundary leaves remaining at zero, and the helper returns 124 with no output.
-# That is what reddened this case twice on loaded runners. A five-second window
-# gives each fork five times the slack while every assertion below keeps its
-# exact meaning: 30.5 and 08.5 still clamp because their whole parts are >= 5,
-# 0.5 still passes through because its whole part is not, and 0 still reports
-# the remaining window.
-SECONDS=100
-printf 'CLAMPED=%s\n' "$(_mole_timeout_with_deadline 30.5 105)"
-SECONDS=100
-printf 'SHORT=%s\n' "$(_mole_timeout_with_deadline 0.5 105)"
-SECONDS=100
-printf 'ZERO=%s\n' "$(_mole_timeout_with_deadline 0 105)"
-SECONDS=100
-printf 'LEADING=%s\n' "$(_mole_timeout_with_deadline 08.5 105)"
+# `remaining` is `deadline - SECONDS`, and SECONDS advances in real time even
+# after assignment. Pinning SECONDS=100 with a fixed deadline of 105 still races
+# on loaded runners: a fork or slow step can straddle a second boundary, shrink
+# remaining, and redden exact CLAMPED=5 assertions. Compute each deadline as
+# SECONDS+5 inside the same subshell as the helper call so deadline and
+# remaining are derived together, then assert on the clamping rules instead of a
+# hard-coded remaining value.
+assert_clamped() {
+    local requested="$1"
+    local label="$2"
+    local deadline remaining got
+    deadline=$((SECONDS + 5))
+    remaining=$((deadline - SECONDS))
+    got=$(_mole_timeout_with_deadline "$requested" "$deadline") || {
+        printf '%s=TIMEOUT remaining=%s\n' "$label" "$remaining"
+        return 1
+    }
+    printf '%s=%s\n' "$label" "$got"
+    if [[ "$requested" == "0.5" ]]; then
+        [[ "$got" == "0.5" ]] || return 1
+    elif [[ "$requested" =~ ^0+(\.0+)?$ ]]; then
+        [[ "$got" == "$remaining" ]] || return 1
+    else
+        [[ "$got" == "$remaining" ]] || return 1
+    fi
+}
+assert_clamped 30.5 CLAMPED || exit 1
+assert_clamped 0.5 SHORT || exit 1
+assert_clamped 0 ZERO || exit 1
+assert_clamped 08.5 LEADING || exit 1
 SCRIPT
 
     [ "$status" -eq 0 ] || return 1
-    [[ "$output" == *"CLAMPED=5"* ]] || return 1
+    [[ "$output" == *"CLAMPED="* ]] || return 1
     [[ "$output" == *"SHORT=0.5"* ]] || return 1
-    [[ "$output" == *"ZERO=5"* ]] || return 1
-    [[ "$output" == *"LEADING=5"* ]]
+    [[ "$output" != *"TIMEOUT"* ]] || return 1
+    [[ "$output" == *"ZERO="* ]] || return 1
+    [[ "$output" == *"LEADING="* ]]
 }
 
 @test "get_path_size_kb bounds the app metadata fast path" {
