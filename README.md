@@ -13,10 +13,12 @@
 </p>
 
 <p align="center">
-  <img src="https://gw.alipayobjects.com/zos/k/ro/ZzF8e8.png" alt="Mole - 95.50GB freed" width="1000" />
+  <img src="./docs/img/big-mole.png" alt="Mole cleanup results" width="1000" />
 </p>
 
-> Prefer a native app? [Mole for Mac](https://mole.fit) brings cleanup, app management, maintenance, disk maps, and live status into one lightweight, VoiceOver-ready app. It is $19 once and covers 2 Macs, with lifetime updates and a 14-day refund. The license moves with you when you replace a Mac. [Download and try it](https://mole.fit/download). The CLI stays free and open source.
+> Prefer a native app? [Mole for Mac](https://mole.fit/) brings cleanup, app management, maintenance, disk maps, and live status into one lightweight, VoiceOver-ready app. One license covers 2 Macs with lifetime updates and a 14-day refund. The CLI stays free and open source.
+>
+> Mac app details: [Cleaner](https://mole.fit/mac-cleaner), [App Uninstaller](https://mole.fit/mac-app-uninstaller), [Optimizer](https://mole.fit/mac-optimizer), [Disk Analyzer](https://mole.fit/mac-disk-analyzer), and [System Monitor](https://mole.fit/mac-system-monitor).
 
 ## Features
 
@@ -413,7 +415,7 @@ Thanks to everyone who helped build Mole. Go follow them. ❤️
 <br/><br/>
 Real feedback from users who shared Mole on X.
 
-<img src="https://gw.alipayobjects.com/zos/k/dl/lovemole.jpeg" alt="Community feedback on Mole" width="1000" />
+<img src="./docs/img/mole-love.png" alt="Community feedback on Mole" width="1000" />
 
 ## Support
 
