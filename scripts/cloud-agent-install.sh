@@ -18,7 +18,6 @@ need git
 need bash
 need go
 need python3
-need bun
 
 # Bats + shell tooling for scripts/test.sh
 if ! command -v bats > /dev/null 2>&1; then
