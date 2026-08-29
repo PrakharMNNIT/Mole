@@ -5,7 +5,7 @@ set -euo pipefail
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT"
 
-export PATH="/usr/local/go/bin:$HOME/.local/bin:$PATH"
+export PATH="/usr/local/go/bin:$HOME/.npm-global/bin:$HOME/.local/bin:$PATH"
 
 need() {
     if ! command -v "$1" > /dev/null 2>&1; then
