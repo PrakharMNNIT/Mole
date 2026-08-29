@@ -16,14 +16,29 @@ Curated third-party skill systems for super-pro developer workflows on Mole. **D
 | **agent-skills** | [vercel-labs/agent-skills](https://github.com/vercel-labs/agent-skills) | `npx skills add vercel-labs/agent-skills -g -a cursor` | `vercel-*` |
 | **find-skills** | [vercel-labs/skills](https://github.com/vercel-labs/skills) | `npx skills add vercel-labs/skills -g -a cursor` | `find-skills` |
 | **compound-engineering** | [EveryInc/compound-engineering-plugin](https://github.com/EveryInc/compound-engineering-plugin) | `npx skills add EveryInc/compound-engineering-plugin -g -a cursor` | `ce-*`, `lfg` |
+| **praxstack** | [praxstack/skills-and-personas](https://github.com/praxstack/skills-and-personas) | `scripts/install-praxstack-skills.sh` | `apex-*`, `backend-pe*`, `constellation-team`, etc. |
 
 Install helpers:
 
 ```bash
-./scripts/install-agent-skills.sh    # portable packs (npx skills)
-./scripts/install-gstack-cursor.sh   # gstack runtime + /plan-ceo-review aliases
-./scripts/vendor-agent-skills.sh     # copy into .claude/skills/ + .agents/skills/
+./scripts/install-agent-skills.sh      # portable packs (npx skills)
+./scripts/install-gstack-cursor.sh     # gstack runtime + /plan-ceo-review aliases
+./scripts/install-praxstack-skills.sh  # goals/skills/personas from praxstack repo
+./scripts/vendor-agent-skills.sh       # copy into .claude/skills/ + .agents/skills/
 ```
+
+### praxstack/skills-and-personas
+
+Personal workflow layer: 41 canonical skills (`new-skills/`), 87 extended skills (`skills/`), personas, and lifecycle prompts.
+
+| Layer | Path after install | Use |
+| --- | --- | --- |
+| Canonical skills | `~/.cursor/skills/` (from `new-skills/`) | `apex-autonomous-mode`, `backend-pe`, `constellation-team`, `kingmode`, `principal-engineer`, … |
+| Extended catalog | `~/.agents/skills/` + symlinks | `teach-pro-max`, `brain-ops`, `research-compendium`, … |
+| Personas | `~/.cursor/personas-praxstack/` | `personas/`, `md-personas/`, `team-personas/`, `.claude/agents/` |
+| Lifecycle prompts | `~/.cursor/personas-praxstack/prompts/` | High-End Operator (Think→Ship), APEX (`APEX-CORE.md`) |
+
+Where both trees share a slug (e.g. `backend-pe`), the canonical `new-skills/` copy wins in `~/.cursor/skills/`.
 
 ## Also worth knowing (selective use)
 

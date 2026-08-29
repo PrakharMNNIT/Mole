@@ -37,4 +37,11 @@ make test-go
 # Syntax-check shell sources
 find bin lib -name '*.sh' -print0 | xargs -0 -n1 bash -n
 
+# Optional skill stacks (idempotent; safe to re-run)
+if [ "${MOLE_INSTALL_AGENT_SKILLS:-0}" = "1" ]; then
+    "$ROOT/scripts/install-agent-skills.sh"
+    "$ROOT/scripts/install-gstack-cursor.sh"
+    "$ROOT/scripts/install-praxstack-skills.sh"
+fi
+
 echo "cloud-agent-install: OK ($(go version | awk '{print $3}'))"
