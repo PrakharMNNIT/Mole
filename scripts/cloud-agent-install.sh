@@ -32,7 +32,7 @@ if ! command -v graphify > /dev/null 2>&1; then
 fi
 
 make build
-go test ./...
+make test-go
 
 # Syntax-check shell sources
 find bin lib -name '*.sh' -print0 | xargs -0 -n1 bash -n
