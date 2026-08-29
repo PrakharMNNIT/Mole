@@ -1,0 +1,4 @@
+{
+  "name": "Mole (shell + Go)",
+  "install": "./scripts/cloud-agent-install.sh"
+}
