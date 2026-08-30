@@ -1,0 +1,16 @@
+---
+description: Block gstack skills that rewrite AGENTS.md via the CLAUDE.md symlink
+alwaysApply: true
+---
+
+# gstack skills and AGENTS.md
+
+In this repository, `CLAUDE.md` is a symlink to `AGENTS.md`. Do **not** invoke these gstack skills here:
+
+- `gstack-sync-gbrain`
+- `gstack-ship`
+- `gstack-review`
+
+They append or rewrite `CLAUDE.md`, which would mutate the shared project contract in `AGENTS.md`.
+
+Use Mole-native skills instead: `bugs`, `mole`, `release-flow`, `release-notes`.

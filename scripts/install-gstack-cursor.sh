@@ -14,12 +14,16 @@ if [ ! -d "$GSTACK_DEST/.git" ]; then
 fi
 
 # setup may exit 1 on checklist.md self-symlink when runtime root is ~/.cursor/skills/gstack (#2361)
-(
-    cd "$GSTACK_DEST"
-    ./setup --host cursor
-) || {
-    echo "warning: gstack setup returned nonzero (often benign checklist.md ln); continuing" >&2
-}
+setup_log="$(mktemp)"
+trap 'rm -f "$setup_log"' EXIT
+if ! (cd "$GSTACK_DEST" && ./setup --host cursor > "$setup_log" 2>&1); then
+    if grep -qE 'checklist\.md|File exists' "$setup_log"; then
+        echo "warning: gstack setup returned nonzero (benign checklist.md ln); continuing" >&2
+    else
+        cat "$setup_log" >&2
+        exit 1
+    fi
+fi
 
 # Workaround: link gstack-<skill> → <skill> so /plan-ceo-review et al. appear in Cursor.
 linked=0

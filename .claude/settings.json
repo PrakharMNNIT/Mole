@@ -17,7 +17,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/ubuntu/.local/bin/graphify hook-guard search"
+            "command": "bash $CLAUDE_PROJECT_DIR/.claude/hooks/graphify-guard.sh search"
           }
         ]
       },
@@ -26,7 +26,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "/home/ubuntu/.local/bin/graphify hook-guard read"
+            "command": "bash $CLAUDE_PROJECT_DIR/.claude/hooks/graphify-guard.sh read"
           }
         ]
       }
